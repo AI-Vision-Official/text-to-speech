@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Read Aloud</title>
+</head>
+<body>
+  <div>
+    <label for="voices">Choose a voice:</label>
+    <select id="voices"></select>
+
+    <label for="languages">Choose a language:</label>
+    <select id="languages"></select>
+
+    <button id="speakButton">Read Aloud</button>
+    <button id="stopButton">Stop</button>
+  </div>
+
+  <script>
+    const speakButton = document.getElementById('speakButton');
+    const stopButton = document.getElementById('stopButton');
+    const voicesSelect = document.getElementById('voices');
+    const languagesSelect = document.getElementById('languages');
+    let voices = [];
+
+    function populateVoiceList() {
+      voices = speechSynthesis.getVoices();
+      if (!voices.length) return;
+
+      voicesSelect.innerHTML = '';
+      languagesSelect.innerHTML = '';
+      const languageOptions = new Set();
+
+      voices.forEach(voice => {
+        const option = document.createElement('option');
+        option.value = voice.name;
+        option.textContent = `${voice.name} (${voice.lang})`;
+        voicesSelect.appendChild(option);
+        languageOptions.add(voice.lang);
+      });
+
+      languageOptions.forEach(lang => {
+        const option = document.createElement('option');
+        option.value = lang;
+        option.textContent = lang;
+        languagesSelect.appendChild(option);
+      });
+    }
+
+    // Zorg dat stemmen eerst geladen zijn
+    setTimeout(() => {
+      populateVoiceList();
+      speechSynthesis.onvoiceschanged = populateVoiceList;
+    }, 200);
+
+    speakButton.addEventListener('click', () => {
+      let mainContent = '';
+      // Alleen uit deze pagina tekst, niet uit Google Sites zelf!
+      document.querySelectorAll('p, h1, h2, li').forEach(el => {
+        mainContent += el.innerText + ' ';
+      });
+
+      const utterThis = new SpeechSynthesisUtterance(mainContent.trim());
+      const selectedVoice = voices.find(v =>
+        v.name === voicesSelect.value &&
+        v.lang === languagesSelect.value
+      );
+      if (selectedVoice) utterThis.voice = selectedVoice;
+      speechSynthesis.speak(utterThis);
+    });
+
+    stopButton.addEventListener('click', () => {
+      speechSynthesis.cancel();
+    });
+  </script>
+</body>
+</html>
