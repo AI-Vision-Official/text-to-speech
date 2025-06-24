@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Read Aloud</title>
+  <title>Read Aloud - WIN</title>
 </head>
 <body>
   <div>
@@ -16,10 +16,24 @@
     <button id="stopButton">Stop</button>
   </div>
 
-  <!-- 👇 DIT is de tekst die wordt voorgelezen -->
-  <div class="main-text" style="margin-top: 20px;">
-    <h2>Testtekst voor voorlezen</h2>
-    <p>Welkom op onze website. Deze tekst is een voorbeeld en wordt voorgelezen wanneer je op de knop drukt.</p>
+  <!-- 👇 De voorleesbare tekst -->
+  <div class="main-text" style="margin-top: 20px; max-width: 800px; line-height: 1.6;">
+    <h2>Welcome to the Worldwide Innovation Network (WIN)</h2>
+    <p>Hi there, right now it’s just me here, I'm Chris.</p>
+    <p>I’ve spent years developing solutions to some of the world’s most pressing problems – from zero-emission tech to revolutionary maritime transport – but one person alone cannot bring this vision to life.</p>
+    <p>That’s why I’m looking for skilled partners with expertise and commitment to join me in this mission. I need people who can not only take action but can handle their roles with independence and integrity.</p>
+    <p>Here’s who I need:</p>
+    <ul>
+      <li>A Project Manager with a proven track record in setting up crowdfunding (Kickstarter, GoFundMe, Indiegogo, etc.), team building, and negotiating beneficial terms. This person will lead the team forward, ensuring a smooth path without my constant oversight.</li>
+      <li>Engineers & CAD Specialists who can bring my ideas to life as prototypes, preparing designs for manufacturing and real-world testing.</li>
+      <li>Programmers who can develop the essential digital side, including apps, websites, and software.</li>
+      <li>Legal and IP Experts to safeguard our innovations.</li>
+      <li>Financial Support from a bookkeeper who knows how to handle startup finances and budgeting.</li>
+      <li>Marketing & Social Media Experts with SEO and growth expertise to build an audience and connect WIN with like-minded backers.</li>
+    </ul>
+    <p>This is an opportunity to be part of something transformative from the very beginning. Some technical details are kept brief here, but for serious partners, I am more than ready to share in-depth plans to take these ideas to market.</p>
+    <p>If you’re looking to be part of something with real purpose and lasting impact, and can contribute your expertise toward shaping the future, I invite you to join me.</p>
+    <p><strong>"Let’s Innovate Beyond Limits, And Win Beyond Measures!" (Tangere Mundi)</strong></p>
   </div>
 
   <script>
@@ -51,6 +65,13 @@
         option.textContent = lang;
         languagesSelect.appendChild(option);
       });
+
+      // Automatisch Engels instellen als standaard
+      const defaultVoice = voices.find(v => v.lang.startsWith('en'));
+      if (defaultVoice) {
+        voicesSelect.value = defaultVoice.name;
+        languagesSelect.value = defaultVoice.lang;
+      }
     }
 
     // Zorg dat stemmen geladen zijn
@@ -81,3 +102,4 @@
   </script>
 </body>
 </html>
+
