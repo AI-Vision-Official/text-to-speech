@@ -16,6 +16,12 @@
     <button id="stopButton">Stop</button>
   </div>
 
+  <!-- 👇 DIT is de tekst die wordt voorgelezen -->
+  <div class="main-text" style="margin-top: 20px;">
+    <h2>Testtekst voor voorlezen</h2>
+    <p>Welkom op onze website. Deze tekst is een voorbeeld en wordt voorgelezen wanneer je op de knop drukt.</p>
+  </div>
+
   <script>
     const speakButton = document.getElementById('speakButton');
     const stopButton = document.getElementById('stopButton');
@@ -47,25 +53,25 @@
       });
     }
 
-    // Zorg dat stemmen eerst geladen zijn
+    // Zorg dat stemmen geladen zijn
     setTimeout(() => {
       populateVoiceList();
       speechSynthesis.onvoiceschanged = populateVoiceList;
     }, 200);
 
     speakButton.addEventListener('click', () => {
-      let mainContent = '';
-      // Alleen uit deze pagina tekst, niet uit Google Sites zelf!
-      document.querySelectorAll('p, h1, h2, li').forEach(el => {
-        mainContent += el.innerText + ' ';
-      });
+      const contentElement = document.querySelector('.main-text');
+      if (!contentElement) return;
 
-      const utterThis = new SpeechSynthesisUtterance(mainContent.trim());
+      const textToRead = contentElement.innerText.trim();
+      const utterThis = new SpeechSynthesisUtterance(textToRead);
+
       const selectedVoice = voices.find(v =>
         v.name === voicesSelect.value &&
         v.lang === languagesSelect.value
       );
       if (selectedVoice) utterThis.voice = selectedVoice;
+
       speechSynthesis.speak(utterThis);
     });
 
